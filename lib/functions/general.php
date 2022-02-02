@@ -81,6 +81,7 @@ function boilerplate_excerpt($limit) {
 */
 add_theme_support('post-thumbnails');
 add_image_size('full', 3000, 3000, true);
+add_image_size('logo', 200, 200, true);
 
 
 /**

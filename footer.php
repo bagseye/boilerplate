@@ -3,11 +3,19 @@
 <footer>
     <div class="footer--logo">
         <a href="<?php echo home_url('/'); ?>">
-            <?php $site_logo = get_field('footer_logo', 'options'); ?>
+            <?php 
+            
+            $footer_logo = get_field('footer_logo', 'options');
 
-            <?php if(!empty($site_logo)) : ?>
-                <img loading="lazy" src="<?php echo $site_logo['url'] ?>" alt="<?php echo $site_logo['alt']; ?>">
-            <?php endif; ?>
+            if(!empty($footer_logo)) :
+
+                echo '<picture>
+                        ' . wp_filter_content_tags('<img class="wp-image-' . $footer_logo['ID'] . '" src="' . $footer_logo['sizes']['logo'] . '" alt="' . $footer_logo['alt'] . '" />') . '
+                      </picture>';
+         
+            endif; 
+            
+            ?>
         </a>
     </div>
 

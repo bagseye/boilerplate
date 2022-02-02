@@ -12,10 +12,19 @@
 <header class="masthead">
     <div class="masthead--logo">
         <a href="<?php echo home_url('/'); ?>" class="masthead__logo--link">
-            <?php $site_logo = get_field('site_logo', 'options'); ?>
-            <?php if(!empty($site_logo)) : ?>
-                <img src="<?php echo $site_logo['url'] ?>" alt="<?php $site_logo['alt'] ?>">
-            <?php endif; ?>
+            <?php 
+            
+            $header_logo = get_field('header_logo', 'options');
+
+            if(!empty($header_logo)) :
+
+                echo '<picture>
+                        ' . wp_filter_content_tags('<img class="wp-image-' . $header_logo['ID'] . '" src="' . $header_logo['sizes']['logo'] . '" alt="' . $header_logo['alt'] . '" />') . '
+                      </picture>';
+         
+            endif; 
+            
+            ?>
         </a>
     </div>
 

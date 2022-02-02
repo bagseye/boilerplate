@@ -43,6 +43,9 @@ $current_page = get_query_var('cat');
                 </div>
             </div>
 
+            <?php $i++;
+            endwhile; ?>
+
             <?php if(paginate_links()) : ?>
             <div class="blog-posts__paginate-links">
                 <p><?php echo paginate_links(); ?></p>
