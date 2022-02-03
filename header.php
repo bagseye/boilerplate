@@ -30,13 +30,15 @@
 
     <div class="masthead__nav">
         <?php 
+
+        get_template_part('lib/templates/nav');
         
-        wp_nav_menu(
-            array(
-                'theme_location' => 'header',
-                'container' => 'false'
-            )
-        );
+        // wp_nav_menu(
+        //     array(
+        //         'theme_location' => 'header',
+        //         'container' => 'false'
+        //     )
+        // );
 
         ?>
     </div>
