@@ -12,25 +12,32 @@
     <h1><?php echo get_the_title(); ?></h1>
     <h3><?php echo get_the_date('d M Y'); ?></h3>
 
+    <?php get_template_part('lib/blocks/authorblock'); ?>
+
     <?php 
     
     $cats = get_the_category();
-    $cats_count = count($cats);
-
     $tags = get_the_tags();
-    $tags_count = count($tags);
 
     ?>
 
-    <?php if($cats) : ?>
+
+
+    <?php if($cats) : $cats_count = count($cats); ?>
     <div class="categories">
         <?php foreach($cats as $cat) : ?>
-            <span><?php echo $cat->name ?></span>
+            <span><a href="<?php echo get_category_link($cat->term_id) ?>"><?php echo $cat->name ?></a></span>
         <?php endforeach; ?>
     </div>
     <?php endif; ?>
 
-    <?php if($tags) : $i = 1; ?>
+    <?php 
+    
+    if($tags) : 
+        $i = 1;
+        $tags_count = count($tags);
+
+    ?>
     <div class="tags">
         <?php foreach($tags as $tag) : ?>
             <?php $tag_link = get_tag_link($tag->term_id); ?>
@@ -38,12 +45,13 @@
         <?php $i++; ?>
         <?php endforeach; ?>
     </div>
+
     <?php endif; ?>
 
     <div class="post--content">
         <?php the_content(); ?>
     </div>
 
-    <?php get_template_block('lib/blocks/shareblock'); ?>
-    
+    <?php get_template_part('lib/blocks/shareblock'); ?>
+
 </section>
