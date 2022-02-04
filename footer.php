@@ -1,5 +1,7 @@
 </div> <!-- .site-wrapper -->
 
+<?php get_template_part('lib/blocks/cookie'); ?>
+
 <footer>
     <div class="footer--logo">
         <a href="<?php echo home_url('/'); ?>">
