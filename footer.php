@@ -1,5 +1,6 @@
 </div> <!-- .site-wrapper -->
 
+<?php get_template_part('lib/blocks/toast'); ?>
 <?php get_template_part('lib/blocks/cookie'); ?>
 
 <footer>

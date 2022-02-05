@@ -7,6 +7,7 @@
 */
 
 define('THEME_DIRECTORY', get_template_directory());
+define('THEME_NAME', 'boilerplate');
 
 
 /**
