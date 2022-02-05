@@ -1,0 +1,8 @@
+.toast {
+    background-color: red;
+
+    &__show {
+        display: grid;
+        color: orange;
+    }
+}
