@@ -26,45 +26,39 @@ function closeToast(ev) {
 
 // COOKIE
 //SET THE COOKIE
-function setCookie(cName, cValue, exp) {
+function setCookieAccept(ev, cValue) {
+  const { expires, cookiename } = ev.dataset;
+
   let date = new Date();
-  // Get the time in ms
-  date.setTime(date.getTime() + exp * 24 * 60 * 60 * 1000);
+  date.setTime(date.getTime() + expires * 24 * 60 * 60 * 1000);
+  const expireString = `expires="${date.toUTCString()}"`;
+  document.cookie = `${cookiename}=${cValue}; ${expireString}; path=/`;
 
-  const expires = `expires="${date.toUTCString()}"`;
-
-  document.cookie = `${cName}=${cValue}; ${expires}; path=/`;
+  ev.closest(".cookiebar").classList.add("cookiebar__accepted");
 }
 
-// GET INFO ABOUT THE COOKIE
-function getCookie(cName) {
+// CHECK FOR COOKIE
+function checkForCookie(cName) {
   const name = `${cName}=`;
   const cDecoded = decodeURIComponent(document.cookie);
-  const cArr = cDecoded.split("; ");
+  const cArr = cDecoded.split(";");
 
   let res;
 
   cArr.forEach((val) => {
-    if (val.indexOf(name) === 0) res = val.substring(name.length);
+    if (val.includes(name)) res = true;
   });
 
   return res;
 }
 
-// CHECK CURRENT STATE OOF COOKIE
-function checkCookie() {
-  const cookieBar = document.querySelector(".cookiebar");
-  const cookieName = cookieBar.querySelector("button").dataset.cookiename;
-  const cookieRes = getCookie(cookieName);
-
-  return cookieRes;
-}
-
 // DOM CONTENT LOADED
 window.addEventListener("DOMContentLoaded", function () {
-  const cookieStatus = checkCookie();
+  const cookieBar = document.querySelector(".cookiebar");
+  const cookieName = cookieBar.querySelector("button").dataset.cookiename;
+  const cookieRes = checkForCookie(cookieName);
 
-  if (cookieStatus === "accepted") {
+  if (cookieRes) {
     document.querySelector(".cookiebar").classList.add("cookiebar__accepted");
   }
 });
@@ -72,4 +66,10 @@ window.addEventListener("DOMContentLoaded", function () {
 // PAGE LOADED
 window.addEventListener("load", function () {
   showToast();
+
+  var elms = document.getElementsByClassName("splide");
+
+  for (var i = 0; i < elms.length; i++) {
+    new Splide(elms[i]).mount();
+  }
 });

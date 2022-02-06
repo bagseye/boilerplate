@@ -18,8 +18,8 @@ function buildStyles() {
     .pipe(dest("./dist/css"));
 }
 
-function buildVendor() {
-  return src("assets/vendor/*css")
+function buildVendorStyles() {
+  return src("assets/vendor/css/*.css")
     .pipe(cleanCSS())
     .pipe(concat("vendor.min.css"))
     .pipe(dest("dist/css"));
@@ -32,12 +32,29 @@ function buildScripts() {
     .pipe(dest("dist/js"));
 }
 
+function buildVendorScripts() {
+  return src("assets/vendor/js/*.js")
+    .pipe(uglify())
+    .pipe(concat("vendor.min.js"))
+    .pipe(dest("dist/js"));
+}
+
 // exports.default = series(buildStyles, buildVendor, buildScripts);
 exports.default = function () {
   watch(
-    ["assets/scss/*.scss", "assets/js/*.js"],
-    parallel(buildScripts, buildStyles, buildVendor)
+    [
+      "assets/scss/*.scss",
+      "assets/js/*.js",
+      "assets/vendor/js/*.js",
+      "assets/vendor/css/*.css",
+    ],
+    parallel(buildScripts, buildVendorScripts, buildStyles, buildVendorStyles)
   );
 };
 
-exports.buildDist = parallel(buildScripts, buildStyles, buildVendor);
+exports.buildDist = parallel(
+  buildScripts,
+  buildVendorScripts,
+  buildStyles,
+  buildVendorStyles
+);

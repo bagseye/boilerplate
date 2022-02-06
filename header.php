@@ -32,13 +32,6 @@
         <?php 
 
         get_template_part('lib/templates/nav');
-        
-        // wp_nav_menu(
-        //     array(
-        //         'theme_location' => 'header',
-        //         'container' => 'false'
-        //     )
-        // );
 
         ?>
     </div>
@@ -49,4 +42,5 @@
 </header>
 
 <div class="overlay"></div>
-<div class="site-wrapper">
+<div class="site-wrapper" data-aos="fade">
+    <?php get_template_part('lib/blocks/hero-slide'); ?>
