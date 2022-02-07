@@ -99,26 +99,6 @@ function watchFiles() {
 
 const watchPro = parallel(watchFiles, browserSyncInit);
 
-// exports.default = series(buildStyles, buildVendor, buildScripts);
-// exports.default = function () {
-//   watch(
-//     [
-//       "assets/scss/*.scss",
-//       "assets/js/*.js",
-//       "assets/vendor/js/*.js",
-//       "assets/vendor/css/*.css",
-//     ],
-//     parallel(buildScripts, buildVendorScripts, buildStyles, buildVendorStyles)
-//   );
-// };
-
-// exports.buildDist = parallel(
-//   buildScripts,
-//   buildVendorScripts,
-//   buildStyles,
-//   buildVendorStyles
-// );
-
 // Tasks
 exports.watch = watchPro;
 exports.build = build;
