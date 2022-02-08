@@ -63,6 +63,16 @@ window.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function startTestimonials() {
+  const testimonials = document.querySelectorAll("testimonial");
+
+  if (!testimonials) return;
+
+  testimonials.forEach((testimonial) => {
+    new Splide(testimonial).mount();
+  });
+}
+
 // PAGE LOADED
 window.addEventListener("load", function () {
   showToast();
@@ -72,4 +82,8 @@ window.addEventListener("load", function () {
   for (var i = 0; i < elms.length; i++) {
     new Splide(elms[i]).mount();
   }
+});
+
+window.addEventListener("load", function () {
+  startTestimonials();
 });

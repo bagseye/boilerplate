@@ -1,9 +1,9 @@
 </div> <!-- .site-wrapper -->
-
+<?php get_template_part('lib/blocks/testimonial-slide'); ?>
 <?php get_template_part('lib/blocks/toast'); ?>
 <?php get_template_part('lib/blocks/cookie'); ?>
 
-<footer>
+<footer></footer>
     <div class="footer--logo">
         <a href="<?php echo home_url('/'); ?>">
             <?php 
