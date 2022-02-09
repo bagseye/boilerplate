@@ -34,6 +34,12 @@
         get_template_part('lib/templates/nav');
 
         ?>
+        <button class="burger" type="button" aria-expanded="false" aria-label="Toggle Navigation">
+            <p class="sr__only">Menu</p>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </div>
 
     <div class="masthead__Search">

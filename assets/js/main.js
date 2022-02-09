@@ -1,3 +1,31 @@
+const BODY = document.body;
+const burger = document.querySelector(".burger");
+let transitioning = false;
+
+/**
+ * Hamburger Toggle
+ *
+ *
+ */
+function toggleNavMenu(ev) {
+  if (transitioning) return;
+
+  let menuTimer;
+  transitioning = true;
+  let burgerExpanded = burger.getAttribute("aria-expanded");
+  BODY.classList.toggle("menu__open");
+
+  menuTimer = setTimeout(() => {
+    burgerExpanded === "true"
+      ? burger.setAttribute("aria-expanded", "false")
+      : burger.setAttribute("aria-expanded", "true");
+    transitioning = false;
+    clearTimeout(menuTimer);
+  }, 300);
+}
+
+burger.addEventListener("click", toggleNavMenu);
+
 // TOAST
 // SHOW THE TOAST MESSAGE
 function showToast() {
