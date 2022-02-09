@@ -13,12 +13,15 @@ $menu_markup = '
 foreach($menu_items as $menu_item) {
     $link = $menu_item->url;
     $title = $menu_item->title;
+    $menu_id = $menu_item->object_id;
 
     if(!$menu_item->menu_item_parent) {
         $parent_id = $menu_item->ID;
-
-        $menu_markup .= '<li>';
+        
+        $menu_markup .= '<li class="pageid__' . $menu_id . '">';
         $menu_markup .= '<a href="' . $link . '">' . $title . '</a>' . "\n";
+    } else {
+        $menu_markup .= '<li class="pageid__' . $menu_id .' haschildren">' . $title .'<button class="submenu__toggle" type="button" aria-expanded="false" aria-label="Toggle Submenu">Open Submenu</button>';
     }
 
     if($parent_id == $menu_item->menu_item_parent) {

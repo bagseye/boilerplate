@@ -1,0 +1,28 @@
+.masthead {
+
+}
+
+.masthead__nav {
+    >nav {
+        >ul {
+            >li {
+                >.submenu {
+                    height: 0;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+}
+
+.submenu__open {
+    nav {
+        >ul {
+            >li {
+                .submenu {
+                    height: auto;
+                }
+            }
+        }
+    }
+}

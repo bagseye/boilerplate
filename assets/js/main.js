@@ -1,5 +1,6 @@
 const BODY = document.body;
 const burger = document.querySelector(".burger");
+const subMenuToggles = document.querySelectorAll(".submenu__toggle");
 let transitioning = false;
 
 /**
@@ -7,7 +8,7 @@ let transitioning = false;
  *
  *
  */
-function toggleNavMenu(ev) {
+function toggleNavMenu() {
   if (transitioning) return;
 
   let menuTimer;
@@ -25,6 +26,25 @@ function toggleNavMenu(ev) {
 }
 
 burger.addEventListener("click", toggleNavMenu);
+
+/**
+ * Submenu Toggle
+ *
+ *
+ */
+function toggleSubMenu(ev) {
+  const targ = ev.currentTarget;
+  BODY.classList.toggle("submenu__open");
+  let submenuExpanded = targ.getAttribute("aria-expanded");
+
+  submenuExpanded === "true"
+    ? targ.setAttribute("aria-expanded", "false")
+    : targ.setAttribute("aria-expanded", "true");
+}
+
+subMenuToggles.forEach((subToggle) => {
+  subToggle.addEventListener("click", toggleSubMenu);
+});
 
 // TOAST
 // SHOW THE TOAST MESSAGE
