@@ -61,13 +61,14 @@ function paintNav($single_menu_item) {
          * 
         */
         echo '<li class="pageid__' . $object_id . ' navigation__hasChildren">';
-            echo '<a href="' . $link . '">' . $text . '</a><button>Sub Menu</button>';
+            echo '<a href="' . $link . '">' . $text . '</a>
+                  <button class="submenu__toggle" type="button" aria-expanded="false" aria-label="Toggle Submenu">Sub Menu</button>';
 
             /**
              * SUB ITEMS
              * Run paintNav() for each $children array
             */
-            echo '<div class="navigation__sub">
+            echo '<div class="submenu">
                     <ul>';
                     
                     foreach($children as $child_menu) {

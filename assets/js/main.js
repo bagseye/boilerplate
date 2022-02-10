@@ -6,7 +6,6 @@ let transitioning = false;
 /**
  * Hamburger Toggle
  *
- *
  */
 function toggleNavMenu() {
   if (transitioning) return;
@@ -30,11 +29,11 @@ burger.addEventListener("click", toggleNavMenu);
 /**
  * Submenu Toggle
  *
- *
  */
 function toggleSubMenu(ev) {
   const targ = ev.currentTarget;
   BODY.classList.toggle("submenu__open");
+  targ.closest(".navigation__hasChildren").classList.toggle("open");
   let submenuExpanded = targ.getAttribute("aria-expanded");
 
   submenuExpanded === "true"

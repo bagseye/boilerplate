@@ -29,11 +29,9 @@
     </div>
 
     <div class="masthead__nav">
-        <?php 
-
-        get_template_part('lib/templates/nav');
-
-        ?>
+        <nav>
+        <?php get_template_part('lib/templates/nav'); ?>
+        </nav>
         <button class="burger" type="button" aria-expanded="false" aria-label="Toggle Navigation">
             <p class="sr__only">Menu</p>
             <span></span>
