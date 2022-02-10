@@ -3,28 +3,18 @@
 }
 
 .masthead__nav {
-    >nav {
-        >ul {
-            >li {
-                >.submenu {
-                    height: 0;
-                    overflow: hidden;
-                }
-            }
+    .navigation__hasChildren {
+        >.submenu {
+            height: 0;
+            overflow: hidden;
         }
     }
 }
 
-.submenu__open {
-    nav {
-        >ul {
-            >li {
-                &.open {
-                    .submenu {
-                        height: auto;
-                    }
-                }
-            }
+.navigation__hasChildren {
+    &.open {
+        >.submenu {
+            height: auto;
         }
     }
 }

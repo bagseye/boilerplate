@@ -53,6 +53,12 @@ function paintNav($single_menu_item) {
     $link = $single_menu_item['Item']['Link'];
     $text = $single_menu_item['Item']['Text'];
     $object_id = $single_menu_item['Item']['ObjectID'];
+    $parent_id = $single_menu_item['Item']['Parent'];
+    $is_parent = null;
+
+    if($parent_id == 0) {
+        $is_parent = 'submenu__parent';
+    }
 
     // CHECK FOR SUB MENUS
     if(isset($children) && is_array($children) && count($children) > 0) {
@@ -60,7 +66,7 @@ function paintNav($single_menu_item) {
          * CREATE THE PARENT LINK
          * 
         */
-        echo '<li class="pageid__' . $object_id . ' navigation__hasChildren">';
+        echo '<li class="pageid__' . $object_id . ' navigation__hasChildren ' . $is_parent .'">';
             echo '<a href="' . $link . '">' . $text . '</a>
                   <button class="submenu__toggle" type="button" aria-expanded="false" aria-label="Toggle Submenu">Sub Menu</button>';
 

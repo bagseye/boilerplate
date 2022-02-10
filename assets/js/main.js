@@ -32,13 +32,32 @@ burger.addEventListener("click", toggleNavMenu);
  */
 function toggleSubMenu(ev) {
   const targ = ev.currentTarget;
-  BODY.classList.toggle("submenu__open");
-  targ.closest(".navigation__hasChildren").classList.toggle("open");
-  let submenuExpanded = targ.getAttribute("aria-expanded");
+  let menuState = targ.getAttribute("aria-expanded");
 
-  submenuExpanded === "true"
-    ? targ.setAttribute("aria-expanded", "false")
-    : targ.setAttribute("aria-expanded", "true");
+  /**
+   * If were click on a menu item that is not within an open parent
+   * Close the other open menus
+   */
+  if (!targ.closest(".submenu__parent").classList.contains("open")) {
+    subMenuToggles.forEach((toggle) => {
+      toggle.closest(".navigation__hasChildren").classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  /**
+   * If you're clicking on an already open submenu, close it
+   */
+  if (menuState === "true") {
+    targ.setAttribute("aria-expanded", "false");
+    targ.closest(".navigation__hasChildren").classList.remove("open");
+    /**
+     * Otherwise, open the menu
+     */
+  } else {
+    targ.setAttribute("aria-expanded", "true");
+    targ.closest(".navigation__hasChildren").classList.add("open");
+  }
 }
 
 subMenuToggles.forEach((subToggle) => {
