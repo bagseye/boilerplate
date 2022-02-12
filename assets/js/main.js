@@ -16,9 +16,19 @@ function toggleNavMenu() {
   BODY.classList.toggle("menu__open");
 
   menuTimer = setTimeout(() => {
-    burgerExpanded === "true"
-      ? burger.setAttribute("aria-expanded", "false")
-      : burger.setAttribute("aria-expanded", "true");
+    if (burgerExpanded === "true") {
+      burger.setAttribute("aria-expanded", "false");
+      document
+        .querySelectorAll(".navigation__hasChildren.open")
+        .forEach((submenu) => {
+          submenu.classList.remove("open");
+          submenu
+            .querySelector(".submenu__toggle")
+            .setAttribute("aria-expanded", "false");
+        });
+    } else {
+      burger.setAttribute("aria-expanded", "true");
+    }
     transitioning = false;
     clearTimeout(menuTimer);
   }, 300);
@@ -31,11 +41,13 @@ burger.addEventListener("click", toggleNavMenu);
  *
  */
 function toggleSubMenu(ev) {
+  if (!BODY.classList.contains("menu__open")) return;
+
   const targ = ev.currentTarget;
   let menuState = targ.getAttribute("aria-expanded");
 
   /**
-   * If were click on a menu item that is not within an open parent
+   * If were clicking on a menu item that is not within an open parent
    * Close the other open menus
    */
   if (!targ.closest(".submenu__parent").classList.contains("open")) {
@@ -47,12 +59,31 @@ function toggleSubMenu(ev) {
 
   /**
    * If you're clicking on an already open submenu, close it
+   * And any open submenus below it
    */
   if (menuState === "true") {
+    const targParent = targ.closest(".navigation__hasChildren.open");
+    const openSubMenus = targParent.querySelectorAll(
+      ".navigation__hasChildren.open"
+    );
+    // Set the target values to closed state
     targ.setAttribute("aria-expanded", "false");
-    targ.closest(".navigation__hasChildren").classList.remove("open");
+    targParent.classList.remove("open");
     /**
-     * Otherwise, open the menu
+     * Find all sub menus,
+     * If any sub menus are open, set them to a closed state
+     */
+    if (openSubMenus.length > 0) {
+      openSubMenus.forEach((submenu) => {
+        submenu.classList.remove("open");
+        submenu
+          .querySelector(".submenu__toggle")
+          .setAttribute("aria-expanded", "false");
+      });
+    }
+
+    /**
+     * Otherwise, open the selected submenu menu
      */
   } else {
     targ.setAttribute("aria-expanded", "true");
@@ -60,6 +91,9 @@ function toggleSubMenu(ev) {
   }
 }
 
+/**
+ * Assign the submenu toggle functions
+ */
 subMenuToggles.forEach((subToggle) => {
   subToggle.addEventListener("click", toggleSubMenu);
 });
