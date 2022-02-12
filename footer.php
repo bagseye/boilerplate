@@ -1,4 +1,5 @@
 </div> <!-- .site-wrapper -->
+<?php get_template_part('lib/blocks/accordion'); ?>
 <?php get_template_part('lib/blocks/testimonial-slide'); ?>
 <?php get_template_part('lib/blocks/toast'); ?>
 <?php get_template_part('lib/blocks/cookie'); ?>
