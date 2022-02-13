@@ -211,3 +211,54 @@ window.addEventListener("load", function () {
 window.addEventListener("load", function () {
   startTestimonials();
 });
+
+// Height Auto Transitions
+function collapseSection(element) {
+  // Get the height of the element's inner content, regardless of actual size
+  const sectionHeight = element.scrollHeight;
+
+  // Temporarily disable all css transitions
+  // Store the element's transition value for use later
+  const elementTransition = element.style.transition;
+  element.style.transition = "";
+
+  /**
+   * On the next frame (as soon as the previous style change has taken effect)
+   * Set the element's height to the scroll height value set previously
+   * This means we are no longer transitioning 'auto'
+   */
+  requestAnimationFrame(function () {
+    element.style.height = `${sectionHeight}px`;
+    element.style.transition = elementTransition;
+
+    /**
+     * On the next frame (as soon as thre previous style change has taken effect)
+     * Have the element transition to height: 0
+     */
+    requestAnimationFrame(function () {
+      element.style.height = `0px`;
+    });
+  });
+
+  // Mark the section as collpased (closed)
+  element.setAttribute("data-collapsed", "true");
+}
+
+function expandSection(element) {
+  // Get the height of the element's inner content, regardless of actual size
+  const sectionHeight = element.scrollHeight;
+
+  // Have the element transition to the heigiht of its inner content
+  element.style.height = `${sectionHeight}px`;
+
+  // When the next css transition finishes
+  element.addEventListener("transitionend", function (e) {
+    // Remove the event listener so it is only triggered once
+    element.removeEventListener("transitionend", arguments.callee);
+
+    // remove 'height' from the element's inline styles, and it returns to it's initial value
+    element.style.height = null;
+  });
+
+  // Mark the section as not collapsed (open)
+}
