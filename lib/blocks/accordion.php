@@ -3,7 +3,7 @@
         <h2 class="accordion__heading">
             <button class="accordion__toggle" type="button" aria-expanded="false" >Accordion Item</button>
         </h2>
-        <div class="accordion__content">
+        <div class="accordion__content" data-collapsed="true">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, deserunt eius? Eius, possimus. Sunt, maiores. Fugit minus alias nesciunt reprehenderit.
         </div>
     </div>
@@ -12,7 +12,7 @@
         <h2 class="accordion__heading">
             <button class="accordion__toggle" type="button" aria-expanded="false" >Accordion Item</button>
         </h2>
-        <div class="accordion__content">
+        <div class="accordion__content" data-collapsed="true">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, deserunt eius? Eius, possimus. Sunt, maiores. Fugit minus alias nesciunt reprehenderit.
         </div>
     </div>
@@ -21,7 +21,7 @@
         <h2 class="accordion__heading">
             <button class="accordion__toggle" type="button" aria-expanded="false" >Accordion Item</button>
         </h2>
-        <div class="accordion__content">
+        <div class="accordion__content" data-collapsed="true">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Architecto, deserunt eius? Eius, possimus. Sunt, maiores. Fugit minus alias nesciunt reprehenderit.
         </div>
     </div>

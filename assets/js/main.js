@@ -99,29 +99,6 @@ subMenuToggles.forEach((subToggle) => {
   subToggle.addEventListener("click", toggleSubMenu);
 });
 
-// ACCORDION
-function toggleAccordionItem(ev) {
-  const targ = ev.currentTarget;
-  const targParent = targ.closest(".accordion__item");
-  const accordionState = targ.getAttribute("aria-expanded");
-
-  if (accordionState === "true") {
-    targ.setAttribute("aria-expanded", "false");
-    targParent.querySelector(".accordion__content").classList.remove("open");
-  } else {
-    targ.setAttribute("aria-expanded", "true");
-    targParent.querySelector(".accordion__content").classList.add("open");
-  }
-}
-
-if (accordion.length > 0) {
-  const accordionToggles = document.querySelectorAll(".accordion__toggle");
-
-  accordionToggles.forEach((toggle) =>
-    toggle.addEventListener("click", toggleAccordionItem)
-  );
-}
-
 // TOAST
 // SHOW THE TOAST MESSAGE
 function showToast() {
@@ -212,6 +189,30 @@ window.addEventListener("load", function () {
   startTestimonials();
 });
 
+// ACCORDION
+function toggleAccordionItem(ev) {
+  const targ = ev.currentTarget;
+  const targParent = targ.closest(".accordion__item");
+  const targContent = targParent.querySelector(".accordion__content");
+  const accordionState = targ.getAttribute("aria-expanded");
+
+  if (accordionState === "true") {
+    targ.setAttribute("aria-expanded", "false");
+    collapseSection(targContent);
+  } else {
+    targ.setAttribute("aria-expanded", "true");
+    expandSection(targContent);
+  }
+}
+
+if (accordion.length > 0) {
+  const accordionToggles = document.querySelectorAll(".accordion__toggle");
+
+  accordionToggles.forEach((toggle) =>
+    toggle.addEventListener("click", toggleAccordionItem)
+  );
+}
+
 // Height Auto Transitions
 function collapseSection(element) {
   // Get the height of the element's inner content, regardless of actual size
@@ -261,4 +262,5 @@ function expandSection(element) {
   });
 
   // Mark the section as not collapsed (open)
+  element.setAttribute("data-collapsed", "false");
 }

@@ -1,9 +1,14 @@
 .accordion {
     &__content {
-        display: none;
+        transition: height 0.3s ease;
+        overflow: hidden;
 
-        &.open {
-            display: block;
+        &[data-collapsed="false"] {
+            height: auto;
+        }
+
+        &[data-collapsed="true"] {
+            height: 0;
         }
     }
 }
