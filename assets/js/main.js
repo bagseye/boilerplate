@@ -93,6 +93,14 @@ function toggleSubMenu(ev) {
 }
 
 /**
+ * Overlay
+ *
+ */
+const overlay = document.querySelector(".overlay");
+
+overlay.addEventListener("click", toggleNavMenu);
+
+/**
  * Assign the submenu toggle functions
  */
 subMenuToggles.forEach((subToggle) => {

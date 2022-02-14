@@ -1,8 +1,11 @@
 .masthead {
-
+    position: relative;
+    z-index: 100;
+    background-color: #d1d1d1;
 }
 
 .masthead__nav {
+    background-color: #e5e5e5;
     .navigation__hasChildren {
         >.submenu {
             height: 0;
