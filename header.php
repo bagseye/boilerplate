@@ -46,5 +46,6 @@
 </header>
 
 <div class="overlay"></div>
-<div class="site-wrapper" data-aos="fade">
+<div class="site-wrapper">
     <?php get_template_part('lib/blocks/hero-slide'); ?>
+    <?php get_template_part('lib/blocks/hero-video'); ?>

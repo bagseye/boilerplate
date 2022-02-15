@@ -11,6 +11,8 @@ $current_page = get_query_var('cat');
 
 ?>
 
+<?php get_template_part('lib/blocks/filter'); ?>
+
 <section class="blog-posts <?php if(!have_posts()) : ?>blog-posts--no-posts<?php endif; ?>">
     <div class="blog-posts__container">
 
