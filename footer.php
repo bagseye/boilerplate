@@ -4,7 +4,11 @@
 <?php get_template_part('lib/blocks/toast'); ?>
 <?php get_template_part('lib/blocks/cookie'); ?>
 
-<footer></footer>
+<p>
+    <a href="" id="download">Download</a>
+</p>
+<p><?php echo get_option('my_click_counter'); ?></p>
+<footer>
     <div class="footer--logo">
         <a href="<?php echo home_url('/'); ?>">
             <?php 
@@ -58,6 +62,8 @@
 </footer>
 
 <?php wp_footer(); ?>
+
+
 
 </body>
 </html>

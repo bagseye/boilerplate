@@ -272,3 +272,25 @@ function expandSection(element) {
   // Mark the section as not collapsed (open)
   element.setAttribute("data-collapsed", "false");
 }
+
+// CLICK COUNTER
+jQuery(document).ready(function ($) {
+  $("a#download").click(function (e) {
+    e.preventDefault();
+    $.ajax({
+      url: my_ajax_object.ajax_url,
+      data: {
+        action: "increment_counter",
+      },
+      type: "POST",
+    })
+      .done(function () {
+        // go to the link they clicked
+        // window.location = $(this).attr("href");
+        console.log("done");
+      })
+      .fail(function (xhr) {
+        console.log(xhr);
+      });
+  });
+});

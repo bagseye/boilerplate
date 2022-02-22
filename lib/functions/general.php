@@ -229,6 +229,34 @@ if(function_exists('acf_add_options_page')) {
 }
 
 
+// CLICK COUNTER
+add_action('wp_ajax_increment_counter', 'my_increment_counter');
+add_action('wp_ajax_nopriv_increment_counter', 'my_increment_counter');
+
+function my_increment_counter() {
+    // Name of the option 
+    $option_name = 'my_click_counter';
+    // Check if the option is set already 
+    if(get_option($option_name) !== false) {
+        $new_value = intval(get_option($option_name)) + 1;
+        // The option already exisits so update it 
+        update_option($option_name, $new_value);
+    } else {
+        // The option hasnt been created yet, so add it with $autoload set to 'no'
+        $deprecated = null;
+        $autoload = 'no';
+        add_option($option_name, 1, $deprecated, $autoload);
+    }
+}
+
+
+
+function my_enqueue() {
+      wp_enqueue_script( 'ajax-script', get_template_directory_uri() . '/js/my-ajax-script.js', array('jquery') );
+      wp_localize_script( 'ajax-script', 'my_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+ }
+ add_action( 'wp_enqueue_scripts', 'my_enqueue' );
+
 
 
 
