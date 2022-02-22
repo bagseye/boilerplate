@@ -1,13 +1,33 @@
 </div> <!-- .site-wrapper -->
 <?php get_template_part('lib/blocks/accordion'); ?>
 <?php get_template_part('lib/blocks/testimonial-slide'); ?>
+
+<?php 
+
+$args = array(
+        'post_type' => 'post',
+        'p' => $_POST['id'],
+    );
+     
+    $posts = new WP_Query( $args );
+
+?>
+<?if($posts->have_posts()) : ?>
+    <?php while($posts->have_posts()) : $posts->the_post() ?>
+        <div>
+            <?php the_title(); ?>
+            <button data-id="<?php the_ID(); ?>" class="view-post">View more</button>
+        </div>
+    <?php endwhile; ?>
+<?php endif; ?>
+<?php get_template_part('lib/blocks/modal'); ?>
 <?php get_template_part('lib/blocks/toast'); ?>
 <?php get_template_part('lib/blocks/cookie'); ?>
 
 <p>
     <a href="" id="download">Download</a>
 </p>
-<p><?php echo get_option('my_click_counter'); ?></p>
+<p id="mydiv"><?php echo get_option('my_click_counter'); ?></p>
 <footer>
     <div class="footer--logo">
         <a href="<?php echo home_url('/'); ?>">

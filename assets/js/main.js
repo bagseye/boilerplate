@@ -278,7 +278,7 @@ jQuery(document).ready(function ($) {
   $("a#download").click(function (e) {
     e.preventDefault();
     $.ajax({
-      url: my_ajax_object.ajax_url,
+      url: boilerplate_params.ajax_url,
       data: {
         action: "increment_counter",
       },
@@ -286,11 +286,27 @@ jQuery(document).ready(function ($) {
     })
       .done(function () {
         // go to the link they clicked
-        // window.location = $(this).attr("href");
-        console.log("done");
+        $("#mydiv").load(location.href + " #mydiv");
       })
       .fail(function (xhr) {
         console.log(xhr);
       });
+  });
+});
+
+// MODAL POST
+jQuery(function ($) {
+  $("body").on("click", ".view-post", function () {
+    var data = {
+      action: "load_post_by_ajax",
+      id: $(this).data("id"),
+      security: boilerplate_params.security,
+    };
+
+    $.post(boilerplate_params.ajax_url, data, function (response) {
+      response = JSON.parse(response);
+      $("#postModal h5#postModalLabel").text(response.title);
+      $("#postModal .modal__body").html(response.content);
+    });
   });
 });

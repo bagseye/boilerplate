@@ -111,6 +111,11 @@ function script_enqueues() {
     wp_enqueue_style('style-vendor', get_template_directory_uri() . '/dist/css/vendor.min.css', false, '1.0.0', 'all');
     wp_enqueue_style('style', get_template_directory_uri() . '/dist/css/style.min.css', false, '1.0.0', 'all');
 
+    wp_localize_script('custom', 'boilerplate_params', array(
+        'ajax_url' => admin_url('admin-ajax.php'),
+        'stylesheet_dir' => get_stylesheet_directory_uri(),
+        'security' => wp_create_nonce('view_post'),
+    ));
 }
 
 
@@ -230,9 +235,6 @@ if(function_exists('acf_add_options_page')) {
 
 
 // CLICK COUNTER
-add_action('wp_ajax_increment_counter', 'my_increment_counter');
-add_action('wp_ajax_nopriv_increment_counter', 'my_increment_counter');
-
 function my_increment_counter() {
     // Name of the option 
     $option_name = 'my_click_counter';
@@ -249,13 +251,42 @@ function my_increment_counter() {
     }
 }
 
+add_action('wp_ajax_increment_counter', 'my_increment_counter');
+add_action('wp_ajax_nopriv_increment_counter', 'my_increment_counter');
 
 
-function my_enqueue() {
-      wp_enqueue_script( 'ajax-script', get_template_directory_uri() . '/js/my-ajax-script.js', array('jquery') );
-      wp_localize_script( 'ajax-script', 'my_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
- }
- add_action( 'wp_enqueue_scripts', 'my_enqueue' );
+// POST MODAL 
+function load_post_by_ajax_callback() {
+    check_ajax_referer('view_post', 'security');
+    $args = array(
+        'post_type' => 'post',
+        'p' => $_POST['id'],
+    );
+
+    $posts = new WP_Query($args);
+
+    $arr_response = array();
+    if($posts->have_posts()) {
+        while($posts->have_posts()) {
+            $posts->the_post();
+
+            $arr_response = array(
+                'title' => get_the_title(),
+                'content' => get_the_content()
+            );
+        }
+        wp_reset_postdata();
+    }
+
+    echo json_encode($arr_response);
+
+    wp_die();
+}
+add_action('wp_ajax_load_post_by_ajax', 'load_post_by_ajax_callback');
+add_action('wp_ajax_nopriv_load_post_by_ajax', 'load_post_by_ajax_callback');
+
+
+
 
 
 
