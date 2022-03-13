@@ -26,3 +26,38 @@ body {
     clip: rect(0,0,0,0);
     border: 0;
 }
+
+%titles {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+h1 {
+    @extend %titles;
+}
+
+h2 {
+    @extend %titles;
+
+}
+
+h3 {
+    @extend %titles;
+
+}
+
+h4 {
+    @extend %titles;
+
+}
+
+h5 {
+    @extend %titles;
+
+}
+
+h6 {
+    @extend %titles;
+
+}

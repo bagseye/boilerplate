@@ -116,6 +116,10 @@ function script_enqueues() {
         'stylesheet_dir' => get_stylesheet_directory_uri(),
         'security' => wp_create_nonce('view_post'),
     ));
+
+    if( is_singular() && comments_open() && ( get_option( 'thread_comments' ) == 1) ) {
+        wp_enqueue_script( 'comment-reply', '/wp-includes/js/comment-reply.min.js', array(), false, true );
+    }
 }
 
 
@@ -286,6 +290,65 @@ add_action('wp_ajax_load_post_by_ajax', 'load_post_by_ajax_callback');
 add_action('wp_ajax_nopriv_load_post_by_ajax', 'load_post_by_ajax_callback');
 
 
+
+function boilerplate_format_comment($comment, $args, $depth) {
+ 
+    $GLOBALS['comment'] = $comment; ?>
+    
+    <li id="li-comment-<?php comment_ID() ?>" <?php comment_class(); ?>>
+        <article id="div-comment-<?php comment_ID(); ?>" class="comments__item">
+            
+            <div class="comments__item--media">
+                <?php if ( 0 != $args['avatar_size'] ) echo get_avatar( $comment, '160' ); ?>
+            </div>
+ 
+            <div class="comments__item--content">
+
+                <div class="comments__item--title">
+                    <?php 
+                    /* translators: %s: comment author link */
+                    printf( __('<h3>%s</h3>'), get_comment_author_link( $comment ) );
+                    ?>
+                    <div class="comments__item--date">
+                        <time datetime="<?php comment_time( 'c' ) ?>">
+                            <?php
+                                /* translators: 1: comment time, 2: comment date */
+                                printf( __( 'Posted at %1$s, %2$s' ), get_comment_time(), get_comment_date( 'd F', $comment ) );
+                            ?>
+                        </time>
+                    </div>
+                </div>
+
+                <div class="comments__item--comment">
+                    <?php comment_text(); ?>
+                </div>
+
+                <?php if ( '0' == $comment->comment_approved ) : ?>
+                <div class="comments__moderation--await">
+                    <p><?php _e( 'Your comment is awaiting moderation.' ); ?></p>
+                </div>
+                <?php endif; ?>
+
+                <div class="comments__item--conversation">
+                    <?php
+                    if (get_comment_type() == 'comment') {
+                        comment_reply_link( array_merge( $args, array(
+                            'add_below' => 'div-comment',
+                            'depth'     => $depth,
+                            'max_depth' => $args['max_depth'],
+                            'before'    => '<div class="comments__item--reply">',
+                            'after'     => '</div>'
+                        ) ) );
+                    }
+                    ?>
+    
+                    <?php edit_comment_link( __( 'Edit' ), '<div class="comments__item--edit">', '</div>' ); ?>
+                </div>
+
+            </div>            
+        </article>
+         
+<?php }  // function format_comment()
 
 
 
