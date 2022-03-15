@@ -21,28 +21,7 @@ $current_page = get_query_var('cat');
             <div class="blog-posts__posts">
                 <?php while (have_posts()) : the_post(); ?>
 
-                <?php 
-                
-                $cats = get_the_category();
-
-                $post_type = get_post_type();
-                
-                ?>
-
-                <div class="blog-posts__post-wrapper<?php if($i === 0) : ?>blog-posts__post-wrapper--first<?php endif; ?>">
-                    <div class="blog-posts__post">
-                        <a href="<?php echo get_the_permalink(get_the_ID()); ?>">
-                            <?php if($cats) : ?>
-                                <?php foreach($cats as $cat) : ?>
-                                    <span><?php echo $cat->name; ?></span>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                            <h2><?php echo get_the_title(); ?></h2>
-                            <p><?php echo wp_trim_words(get_the_excerpt(), 16) ?></p>
-                        </a>
-                    </div>
-
-                </div>
+                <?php get_template_part('lib/templates/blog-item'); ?>
             </div>
 
             <?php $i++;

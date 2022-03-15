@@ -1,0 +1,21 @@
+$blogitemPadding: $padding;
+$blogitemTitle: 20px;
+
+
+
+.blogitem {
+    &__media {
+        @include aspectRatio(5, 3);
+        background-color: #000;
+    }
+    
+    &__content {
+        background-color: #ededed;
+        padding: $blogitemPadding;
+
+        h2 {
+            font-size: $blogitemTitle;
+        }
+
+    }
+}

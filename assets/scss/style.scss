@@ -76,7 +76,9 @@ Version: 1.0
 // Components 
 @import './components/burger';
 @import './components/comments';
+@import './components/loadmore';
 
 // Templates 
 @import './templates/blog';
+@import './templates/blogitem';
 @import './templates/post';

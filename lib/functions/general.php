@@ -98,21 +98,32 @@ add_filter('gform_init_scripts_footer', function() {
 
 function script_enqueues() {
 
-    if(wp_script_is('jquery', 'registered')) {
+    // if(wp_script_is('jquery', 'registered')) {
 
-        wp_deregister_script('jquery');
+    //     wp_deregister_script('jquery');
 
-    }
+    // }
 
-    wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', array(), '2.2.4', false);
+    // wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', array(), '2.2.4', false);
+    wp_enqueue_script('jquery');
     wp_enqueue_script('vendor', get_template_directory_uri() . '/dist/js/vendor.min.js', array('jquery'), '1.0.0', true);
     wp_enqueue_script('custom', get_template_directory_uri() . '/dist/js/main.min.js', array('vendor'), '1.0.0', true);
+
+    // AJAX LOADMORE
+    // register the main script but do not enqueue it yet
+    wp_register_script( 'boilerplate_loadmore', get_stylesheet_directory_uri() . '/loadmore.js', array('jquery') );
 
     wp_enqueue_style('style-vendor', get_template_directory_uri() . '/dist/css/vendor.min.css', false, '1.0.0', 'all');
     wp_enqueue_style('style', get_template_directory_uri() . '/dist/css/style.min.css', false, '1.0.0', 'all');
 
+    // AJAX LOADMORE
+    // we have to pass parameters to myloadmore.js script but we can get the parameters values only in PHP
+    // you can define variables directly in your HTML but I decided that the most proper way is wp_localize_script()
     wp_localize_script('custom', 'boilerplate_params', array(
         'ajax_url' => admin_url('admin-ajax.php'),
+        'posts' => json_encode( $wp_query->query_vars ), // AJAX LOADMORE - Everything about the loop is here
+        'current_page' => get_query_var( 'paged' ) ? get_query_var('paged') : 1, // AJAX LOADMORE
+        'max_page' => $wp_query->max_num_pages, // AJAX LOADMORE
         'stylesheet_dir' => get_stylesheet_directory_uri(),
         'security' => wp_create_nonce('view_post'),
     ));
@@ -120,6 +131,10 @@ function script_enqueues() {
     if( is_singular() && comments_open() && ( get_option( 'thread_comments' ) == 1) ) {
         wp_enqueue_script( 'comment-reply', '/wp-includes/js/comment-reply.min.js', array(), false, true );
     }
+
+    // AJAX LOADMORE
+    // Now enque the script
+    wp_enqueue_script('boilerplate_loadmore');
 }
 
 
@@ -349,6 +364,32 @@ function boilerplate_format_comment($comment, $args, $depth) {
         </article>
          
 <?php }  // function format_comment()
+
+
+// AJAX LOADMORE
+function boilerplate_loadmore_ajax_handler() {
+
+    // Prepare the arguments for the query 
+    $args = json_decode(stripslashes($_POST['query']), true);
+    $args['paged'] = $_POST['page'] + 1; // need the next page to loaded 
+    $args['post_status'] = 'publish';
+
+    query_posts($args);
+
+    if(have_posts()) :
+
+        while(have_posts() ) : the_post();
+
+            get_template_part('lib/templates/blog-item');
+
+        endwhile;
+
+    endif;
+    die;
+}
+
+add_action('wp_ajax_loadmore', 'boilerplate_loadmore_ajax_handler'); // wp_ajax_{action}
+add_action('wp_ajax_nopriv_loadmore', 'boilerplate_loadmore_ajax_handler'); // wp_ajax_nopriv_{action}
 
 
 
