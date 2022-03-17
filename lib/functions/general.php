@@ -393,6 +393,45 @@ add_action('wp_ajax_nopriv_loadmore', 'boilerplate_loadmore_ajax_handler'); // w
 
 
 
+/* Comment form validation */
+function comment_validation_init() {
+    if(is_single() && comments_open() ) { ?>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+        <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $("#commentform").validate({
+                rules: {
+                author: {
+                    required: true,
+                    minlength: 2,
+                },
+                email: {
+                    required: true,
+                    email: true,
+                },
+                comment: {
+                    required: true,
+                    minlength: 20,
+                },
+                },
 
+                messages: {
+                    author: "Please provide a name",
+                    email: "Please enter a valid email address",
+                    comment: "Please fill the required field",
+                },
+
+                errorElement: "div",
+                errorPlacement: function (error, element) {
+                element.after(error);
+                },
+            });
+        });
+        </script>
+        <?php
+
+    }
+}
+add_action('wp_footer', 'comment_validation_init');
 
 

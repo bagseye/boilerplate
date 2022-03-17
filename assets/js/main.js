@@ -310,3 +310,25 @@ jQuery(function ($) {
     });
   });
 });
+
+// function validateEmail(email) {
+//   var re = /\S+@\S+\.\S+/;
+//   return re.test(email);
+// }
+
+// const commentForm = document.querySelector("#commentform");
+
+// if (commentForm) {
+//   const commentSubmit = commentForm.querySelector("#submit");
+
+//   console.log(commentSubmit);
+//   commentSubmit.addEventListener("click", function (ev) {
+//     ev.preventDefault();
+//     const emailInput = commentForm.querySelector("#email");
+
+//     const isEmail = validateEmail(emailInput.value);
+
+//     console.log(isEmail);
+//   });
+//   // commentSubmit.preventDefault();
+// }
