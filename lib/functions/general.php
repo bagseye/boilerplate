@@ -434,4 +434,8 @@ function comment_validation_init() {
 }
 add_action('wp_footer', 'comment_validation_init');
 
+function brandDots($string) {
+    return preg_replace('/\./', '<span class="brand__dot">.</span>', $string);
+}
+
 

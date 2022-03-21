@@ -1,4 +1,13 @@
 </div> <!-- .site-wrapper -->
+<?php 
+
+$string = 'This. Is. The. Word.';
+
+echo brandDots($string);
+
+
+
+?>
 <?php get_template_part('lib/blocks/accordion'); ?>
 <?php get_template_part('lib/blocks/testimonial-slide'); ?>
 
