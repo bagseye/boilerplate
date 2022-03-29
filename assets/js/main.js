@@ -2,6 +2,7 @@ const BODY = document.body;
 const burger = document.querySelector(".burger");
 const subMenuToggles = document.querySelectorAll(".submenu__toggle");
 const accordion = document.querySelectorAll(".accordion");
+const videoBlocks = document.querySelectorAll(".videoblock");
 let transitioning = false;
 
 /**
@@ -332,3 +333,39 @@ jQuery(function ($) {
 //   });
 //   // commentSubmit.preventDefault();
 // }
+
+/**
+ * VIDEO OBSERVER
+ * Swaps video source from data-src to src when intersecting
+ * Good for YouTube embeds and PageSpeed
+ */
+// const videoObserver = new IntersectionObserver((entries, observer) => {
+//   entries.forEach((entry) => {
+//     const videoTarg = entry.target.querySelector(".videoblock__video");
+//     entry.isIntersecting ? videoTarg.play() : videoTarg.pause();
+//   });
+// });
+
+// window.addEventListener("DOMContentLoaded", function () {
+//   if (videoBlocks.length > 0) {
+//     videoBlocks.forEach((videoBlock) => videoObserver.observe(videoBlock));
+//   }
+// });
+
+function videoPlaceholderPlay(ev, videoBlock) {
+  const video = videoBlock.querySelector(".videoblock__video");
+  video.src += "?autoplay=1";
+  ev.target.style.display = "none";
+}
+
+if (videoBlocks.length > 0) {
+  videoBlocks.forEach((videoBlock) => {
+    const videoPlaceholder = videoBlock.querySelector(
+      ".videoblock__placeholder"
+    );
+
+    videoPlaceholder.addEventListener("click", (targ) =>
+      videoPlaceholderPlay(targ, videoBlock)
+    );
+  });
+}

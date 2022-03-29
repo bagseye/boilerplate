@@ -1,0 +1,36 @@
+.videoblock {
+    &__embed {
+        @include aspectRatio(16,9);
+    }
+
+    &__video,
+    &__placeholder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+
+    &__placeholder {
+        z-index: 1;
+
+        &:before {
+            content: '';
+            display: block;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.5);
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            z-index: 1;
+        }
+    }
+}

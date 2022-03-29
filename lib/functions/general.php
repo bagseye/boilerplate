@@ -253,6 +253,27 @@ if(function_exists('acf_add_options_page')) {
 }
 
 
+function boilerplate_acf_blocks_init() {
+    
+    // Check function exists.
+    if( function_exists('acf_register_block_type') ) {
+        
+        // Register a video block.
+        acf_register_block_type(array(
+            'name'              => 'video',
+            'title'             => __('Video'),
+            'description'       => __('A custom video block.'),
+            'render_template'   => 'lib/blocks/video.php',
+            'category'          => 'formatting',
+        ));
+    }
+}
+add_action('acf/init', 'boilerplate_acf_blocks_init');
+
+
+
+
+
 // CLICK COUNTER
 function my_increment_counter() {
     // Name of the option 
