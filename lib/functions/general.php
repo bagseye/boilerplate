@@ -265,6 +265,9 @@ function boilerplate_acf_blocks_init() {
             'description'       => __('A custom video block.'),
             'render_template'   => 'lib/blocks/video.php',
             'category'          => 'formatting',
+            'supports'          => array(
+                'anchor'    => true,
+            )
         ));
     }
 }
@@ -459,4 +462,48 @@ function brandDots($string) {
     return preg_replace('/\./', '<span class="brand__dot">.</span>', $string);
 }
 
+// Get the section names of blocks
+// For use in generating sub menu of sections on the current page
+function getBlockSectionNames() {
+    global $post;
+    
+    $blocks = parse_blocks($post->post_content);
 
+    $section_names = array();
+
+    foreach($blocks as $block) {
+        $section_name = $block['attrs']['data']['section_name'];
+
+        if($section_name != null) {
+            $section_names[] = $section_name;
+        }
+    }
+
+    return $section_names;
+}
+
+
+/**
+* Allow the following blocks in the editor
+*
+*/
+add_filter( 'allowed_block_types', 'boilerplate_block_types', 10, 2 );
+
+function boilerplate_block_types( $allowed_blocks ) {
+    return array(
+        'core/paragraph',
+        'core/heading',
+        'core/buttons',
+        'core/button',
+        'core/list',
+        'core/image',
+        'core/table',
+        'core/block',
+        'core/gallery',
+        'core/spacer',
+        'core/embed',
+        'core-embed/youtube',
+        'core/html',
+        'acf/video',
+    );
+}

@@ -6,10 +6,19 @@
  */
 
 // Create id attribute allowing for custom "anchor" value.
-$id = 'videoblock-' . $block['id'];
-if( !empty($block['anchor']) ) {
-    $id = $block['anchor'];
+$id = null;
+
+$section_name = get_field('section_name');
+if(!empty($section_name)) {
+    $id = str_replace(' ', '', $section_name);
+} else {
+    $id = 'videoblock-' . $block['id'];
+    if( !empty($block['anchor']) ) {
+        $id = $block['anchor'];
+    }
 }
+
+
 
 // Create class attribute allowing for custom "className" and "align" values.
 $block_class = 'videoblock';
@@ -26,6 +35,7 @@ $video_embed = get_field('video_embed', false, false);
 $video_placeholder = get_field('video_placeholder');
 $video_markup = null;
 $video_iframe = "<iframe class='{$block_class}__video' loading='lazy' src='{$video_embed}'></iframe>";
+
 
 $yt_regex = '~(https?\:\/\/)?((www\.)?youtube\.?(com)?|youtu\.be)\/.+$~';
 
