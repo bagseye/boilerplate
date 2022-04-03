@@ -98,13 +98,8 @@ add_filter('gform_init_scripts_footer', function() {
 
 function script_enqueues() {
 
-    // if(wp_script_is('jquery', 'registered')) {
+    global $wp_query;
 
-    //     wp_deregister_script('jquery');
-
-    // }
-
-    // wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', array(), '2.2.4', false);
     wp_enqueue_script('jquery');
     wp_enqueue_script('vendor', get_template_directory_uri() . '/dist/js/vendor.min.js', array('jquery'), '1.0.0', true);
     wp_enqueue_script('custom', get_template_directory_uri() . '/dist/js/main.min.js', array('vendor'), '1.0.0', true);
@@ -207,12 +202,12 @@ add_filter('upload_mimes', 'boilerplate_mime_types');
  * - Remove the content area
  * 
 */
-function boilerplate_remove_textarea() {
+// function boilerplate_remove_textarea() {
 
-    remove_post_type_support('page', 'editor');
+//     remove_post_type_support('page', 'editor');
 
-}
-add_action('admin_init', 'boilerplate_remove_textarea');
+// }
+// add_action('admin_init', 'boilerplate_remove_textarea');
 
 
 /**
@@ -265,8 +260,10 @@ function boilerplate_acf_blocks_init() {
             'description'       => __('A custom video block.'),
             'render_template'   => 'lib/blocks/video.php',
             'category'          => 'formatting',
+            'mode'              => 'edit',
             'supports'          => array(
                 'anchor'    => true,
+                'align'     => false,
             )
         ));
     }
@@ -458,9 +455,6 @@ function comment_validation_init() {
 }
 add_action('wp_footer', 'comment_validation_init');
 
-function brandDots($string) {
-    return preg_replace('/\./', '<span class="brand__dot">.</span>', $string);
-}
 
 // Get the section names of blocks
 // For use in generating sub menu of sections on the current page

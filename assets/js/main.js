@@ -354,7 +354,8 @@ jQuery(function ($) {
 
 function videoPlaceholderPlay(ev, videoBlock) {
   const video = videoBlock.querySelector(".videoblock__video");
-  video.src += "?autoplay=1";
+  // video.src += "?autoplay=1";
+  video.src = `${video.dataset.videoSrc}?autoplay=1`;
   ev.target.style.display = "none";
 }
 

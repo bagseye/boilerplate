@@ -48,7 +48,9 @@ if($menu_items) {
 
 function paintNav($single_menu_item) {
 
-    $children = $single_menu_item['Children'];
+    if(isset($single_menu_item['Children'])) {
+        $children = $single_menu_item['Children'];
+    }
     $id = $single_menu_item['Item']['ID'];
     $link = $single_menu_item['Item']['Link'];
     $text = $single_menu_item['Item']['Text'];
