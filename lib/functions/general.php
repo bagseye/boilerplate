@@ -108,6 +108,17 @@ function script_enqueues() {
     // register the main script but do not enqueue it yet
     wp_register_script( 'boilerplate_loadmore', get_stylesheet_directory_uri() . '/loadmore.js', array('jquery') );
 
+    // 	// Main navigation scripts.
+	// if ( has_nav_menu( 'primary' ) ) {
+	// 	wp_enqueue_script(
+	// 		'twenty-twenty-one-primary-navigation-script',
+	// 		get_template_directory_uri() . '/assets/js/primary-navigation.js',
+	// 		array( 'twenty-twenty-one-ie11-polyfills' ),
+	// 		wp_get_theme()->get( 'Version' ),
+	// 		true
+	// 	);
+	// }
+
     wp_enqueue_style('style-vendor', get_template_directory_uri() . '/dist/css/vendor.min.css', false, '1.0.0', 'all');
     wp_enqueue_style('style', get_template_directory_uri() . '/dist/css/style.min.css', false, '1.0.0', 'all');
 
@@ -500,4 +511,95 @@ function boilerplate_block_types( $allowed_blocks ) {
         'core/html',
         'acf/video',
     );
+}
+
+
+
+
+function boilerplatePaintCard($post) {
+
+    $post_id = get_the_ID();
+
+    $html = $title = $link = null;
+    $title = get_the_title($post_id);
+    $link = get_the_permalink($post_id);
+
+    $html = '<div class="card">
+                <a href="' . $link . '">
+                    ' . $title . '
+                </a>
+            </div>';
+
+    return $html;
+}
+
+
+
+// Infinite Scroll
+function script_load_more($args = array()) {
+    // Initial posts load 
+    echo '<div id="ajax-primary" class="content-area">';
+        echo '<div id="ajax-content" class="content-area">';
+            ajax_script_load_more($args);
+        echo '</div>';
+        echo '<a href="#" id="loadMore" data-page="1" data-url="' . admin_url("admin-ajax.php") . '">Loading</a>';
+    echo '</div>';
+}
+
+// Create shortcode 
+add_shortcode('ajax_posts', 'script_load_more');
+
+// Loadmore script callback
+function ajax_script_load_more($args) {
+    // init ajax 
+    $ajax = false;
+    // Check ajax call or not 
+    if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        $ajax = true;
+    }
+
+    // Number of posts per page default
+    $num = 2;
+    // Page number
+    $paged = $_POST['page'] + 1;
+    // args 
+    $args = array(
+        'post_type' => 'projects',
+        'post_status' => 'publish',
+        'posts_per_page' => $num,
+        'paged' => $paged
+    );
+    // Query 
+    $query = new WP_Query($args);
+    // Check 
+    if($query->have_posts()) :
+        // Loop articles 
+        while($query->have_posts()) : $query->the_post();
+            // Include articles template
+            include get_template_directory() . '/lib/templates/ajax-content.php';
+        endwhile;
+    else : 
+        echo 0;
+    endif;
+
+    // Reset post data 
+    wp_reset_postdata();
+    // Check ajax call 
+    if($ajax) die();
+
+}
+
+// Load more script ajax hooks 
+add_action('wp_ajax_nopriv_ajax_script_load_more', 'ajax_script_load_more');
+add_action('wp_ajax_ajax_script_load_more', 'ajax_script_load_more');
+
+/*
+ * enqueue js script
+ */
+add_action( 'wp_enqueue_scripts', 'ajax_enqueue_script' );
+/*
+ * enqueue js script call back
+ */
+function ajax_enqueue_script() {
+    wp_enqueue_script( 'script_ajax', get_theme_file_uri( 'script_ajax.js' ), array( 'jquery' ), '1.0', true );
 }

@@ -28,6 +28,25 @@
         </a>
     </div>
 
+	<!-- <nav id="site-navigation" class="primary-navigation" aria-label="<?php// esc_attr_e( 'Primary menu', THEME_NAME ); ?>">
+        <button id="primary-mobile-menu" class="burger" type="button" aria-expanded="false" aria-label="Toggle Navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button> -->
+		<?php
+		// wp_nav_menu(
+		// 	array(
+		// 		'theme_location'  => 'primary',
+		// 		'menu_class'      => 'menu-wrapper',
+		// 		'container_class' => 'primary-menu-container',
+		// 		'items_wrap'      => '<ul id="primary-menu-list" class="%2$s">%3$s</ul>',
+		// 		'fallback_cb'     => false,
+		// 	)
+		// );
+		?>
+	<!-- </nav> -->
+
     <div class="masthead__nav">
         <nav>
         <?php get_template_part('lib/templates/nav'); ?>
